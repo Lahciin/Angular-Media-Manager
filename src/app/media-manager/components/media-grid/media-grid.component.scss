@@ -1,0 +1,52 @@
+.media-container {
+  box-shadow: inset 0 0 0 3px #fff, inset 0 0 0 5px #b4b4b4;
+  position: relative;
+}
+
+.selected-media {
+  box-shadow: inset 0 0 0 3px #fff, inset 0 0 0 7px #0073aa;
+}
+
+.ui-g-4,
+.ui-g-8 {
+  word-break: break-all;
+}
+
+button.check {
+  position: absolute;
+  top: -5px;
+  right: -5px;
+  background-color: #0073aa;
+  box-shadow: 0 0 0 1px #fff, 0 0 0 2px #0073aa;
+  height: 24px;
+  width: 24px;
+  padding: 0;
+  border: 0;
+  outline: 0;
+  z-index: 9;
+  cursor: pointer;
+
+  .media-modal-icon {
+    display: block;
+    height: 15px;
+    width: 15px;
+    margin: 0 0 4px 2px;
+
+    .cui-check.icons {
+      color: #fff;
+    }
+  }
+}
+
+.download {
+  background-color: DodgerBlue;
+  border: none;
+  color: #fff !important;
+  cursor: pointer !important;
+  font-size: 16px;
+}
+
+/* Darker background on mouse-over */
+.download:hover {
+  background-color: RoyalBlue;
+}

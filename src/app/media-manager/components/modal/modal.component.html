@@ -1,0 +1,21 @@
+<div class="app-media-manager-modal">
+  <div class="app-media-manager-modal-body">
+    <button (click)="closeModal('media-manager-modal');" type="button" class="close" aria-label="Close">
+      <span aria-hidden="true">&times;</span>
+    </button>
+    <div class="d-flex mb-2">
+      <h2 class="mr-3">Media library</h2>
+      <button type="button" class="btn btn-light" (click)="toggleAddMedia()">Add New</button>
+    </div>
+
+    <app-add-media [reason]="reason" (CloseEvent)="toggleAddMedia()" (eventAddMedia)="mediaAddedEvent($event)" [ngClass]="{'d-block': addMediaToggle, 'd-none': !addMediaToggle}"></app-add-media>
+
+    <app-media-grid [reason]="reason" (selectedMediaEvent)="receiveSelectedMedia($event)" [mediaAddedSucces]="mediaAddedSucces"></app-media-grid>
+
+    <div class="row justify-content-end mt-2">
+      <button type="button" class="btn btn-danger" (click)="closeModal('media-manager-modal');">Cancel</button>
+      <button type="button" class="btn btn-success" (click)="validate('media-manager-modal');">validate</button>
+    </div>
+  </div>
+</div>
+<div class="app-media-manager-modal-background"></div>

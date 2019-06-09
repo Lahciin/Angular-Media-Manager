@@ -1,0 +1,30 @@
+<p-fileUpload #fileUploader name="myfile[]" [accept]="accept"  maxFileSize="64000000" customUpload="true" (uploadHandler)="myUploader($event)" >
+
+    <ng-template pTemplate="content">
+
+<div class="uploader-inline">
+
+
+  <button type="button" (click)="close()" style="font-size: 2em;" class="close" aria-label="Close">
+    <span aria-hidden="true">&times;</span>
+  </button>
+
+  <div class="uploader-inline-content no-upload-message text-center p-3">
+
+    <div class="upload-ui">
+      <h2 class="upload-instructions drop-instructions">Drop files anywhere to upload</h2>
+      <p class="upload-instructions drop-instructions">or</p>
+
+    </div>
+
+    <div class="upload-inline-status"></div>
+
+    <div class="post-upload-ui">
+
+      <p class="max-upload-size">Maximum upload file size: 64 MB.</p>
+    </div>
+  </div>
+</div>
+</ng-template>
+
+</p-fileUpload>

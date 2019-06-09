@@ -1,0 +1,100 @@
+<div class="container-fluid">
+  <div class="row border border-secondary bg-white">
+    <div class="col-12 col-sm-6 col-md-8 bg-white mt-3 mb-3">
+      <p-dataView #dv [value]="media" [rows]="12" filterBy="title" layout="grid" [lazy]="true"
+        (onLazyLoad)="loadData($event)">
+        <p-header>
+          <div class="ui-helper-clearfix">
+            <div class="ui-g">
+              <div class="ui-g-12 ui-md-4">
+              </div>
+              <div class="ui-g-12 ui-md-4">
+                <p-dropdown [options]="typeOptions" [(ngModel)]="typeKey" placeholder="Media Type"
+                  (onChange)="onTypeChange($event)" [style]="{'min-width':'140px'}"></p-dropdown>
+              </div>
+              <div class="ui-g-6 ui-md-4 filter-container">
+                <div style="position:relative">
+                  <input type="search" pInputText placeholder="Search by title" (keyup)="loadData($event.target.value)">
+                </div>
+              </div>
+            </div>
+          </div>
+        </p-header>
+        <ng-template let-media pTemplate="gridItem">
+          <div style="padding:.5em" class="media-container ui-g-12 ui-md-3 btn mr-0"
+            [ngClass]="{'selected-media': isSelected(media)}" (click)="selectMedia($event, media)">
+
+            <div *ngIf="media.mimeType === 'application/pdf' ; else notPDF">
+              <img alt="pdf icon" src="./assets/img/PDF-icon.png" width="auto">
+            </div>
+
+            <ng-template #notPDF>
+              <img src="{{apiUrl}}{{media._id}}?size=thumbnail" width="auto">
+            </ng-template>
+
+            <button type="button" class="check"
+              [ngClass]="{'d-block': isSelected(media), 'd-none': !isSelected(media)}">
+              <span class="media-modal-icon">
+                <i class="cui-check icons font-xl d-block"></i>
+              </span>
+            </button>
+          </div>
+        </ng-template>
+        <p-footer>
+          <p-paginator #paginator [rows]="12" [totalRecords]="totalRecords" (onLazyLoad)="loadData($event)"
+            (onPageChange)="loadData($event)"></p-paginator>
+        </p-footer>
+      </p-dataView>
+    </div>
+    <div class="col-6 col-md-4 bg-light pt-3 pb-3">
+      <div class="selected-media-container" *ngIf="selectedMedia">
+        <div class="ui-g">
+          <h5> ATTACHMENT DETAILS </h5>
+          <div class="ui-g-12" style="text-align:center">
+
+            <div *ngIf="selectedMedia.mimeType === 'application/pdf' ; else notPDF">
+              <img alt="pdf icon" src="./assets/img/PDF-icon.png" width="100">
+            </div>
+
+            <ng-template #notPDF>
+              <img src="{{apiUrl}}{{selectedMedia._id}}" width="100%">
+            </ng-template>
+
+          </div>
+          <div class="ui-g-4">title: </div>
+          <div class="ui-g-8">{{selectedMedia.title}}</div>
+
+          <div class="ui-g-4">Uploaded: </div>
+          <div class="ui-g-8">{{selectedMedia.createdAt}}</div>
+
+          <div class="ui-g-4">Description: </div>
+          <div class="ui-g-8">{{selectedMedia.description}}</div>
+
+          <div class="ui-g-4">Mime type: </div>
+          <div class="ui-g-8">{{selectedMedia.mimeType}}</div>
+
+          <div class="ui-g-4">Path: </div>
+          <div class="ui-g-8">{{selectedMedia.path}}</div>
+
+          <div class="ui-g-4">user: </div>
+          <div class="ui-g-8">{{selectedMedia.user}}</div>
+        </div>
+
+        <div class="text-right mt-2">
+          <a *ngIf="selectedMedia.mimeType === 'application/pdf'" class="btn w-auto download" download="{{selectedMedia.title}}" href="{{apiUrl}}{{selectedMedia._id}}"><i class="fa fa-download"></i> Download</a>
+          <button class="btn btn-danger editable-table-button btn-xs" (click)="openModal(deleteModal)">
+            <i class="fa fa-trash"></i>
+          </button>
+          <ng-template #deleteModal>
+            <div class="modal-body text-center">
+              <p *ngIf="selectedMedia">Do you really want to delete {{selectedMedia.title}} ?</p>
+              <button type="button" class="btn btn-default" (click)="onDelete(true, selectedMedia._id)">Yes</button>
+              <button type="button" class="btn btn-primary" (click)="onDelete(false, selectedMedia._id)">No</button>
+            </div>
+          </ng-template>
+        </div>
+      </div>
+    </div>
+  </div>
+
+</div>
